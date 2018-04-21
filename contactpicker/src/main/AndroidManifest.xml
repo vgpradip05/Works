@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.contactpicker">
+<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
+    <application>
+        <activity
+            android:name=".ContactPickerActivity"
+            android:label="@string/title_activity_cp"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

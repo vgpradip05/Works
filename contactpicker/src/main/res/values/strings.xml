@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ContactPicker</string>
+    <string name="title_activity_cp">ContactPicker</string>
+</resources>
