@@ -1,12 +1,14 @@
 package com.example.contactpicker;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -33,6 +35,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +67,7 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
     LinearLayout llHScrollView;
     FloatingActionButton fabDone,fabClose;
     Animation fadeIn,fadeOut;
+    ProgressDialog progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,8 +133,9 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         llHScrollView.setVisibility(View.VISIBLE);
     }
     public void getContacts() {
+
         ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,  ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -194,12 +199,14 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         if (Build.VERSION.SDK_INT > 22) {
 
             if (checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                getContacts();
+                //getContacts();
+                new LongOperation().execute("");
             } else {
                 ActivityCompat.requestPermissions(ContactPickerActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, CONTACT_REQ_CODE);
             }
         } else {
-            getContacts();
+            //getContacts();
+            new LongOperation().execute("");
         }
     }
     @Override
@@ -208,8 +215,8 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         switch (requestCode) {
             case CONTACT_REQ_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getContacts();
-
+//                    getContacts();
+                    new LongOperation().execute("");
                 } else {
                     Toast.makeText(ContactPickerActivity.this, "Permission denied to read your Contact Details", Toast.LENGTH_SHORT).show();
                     finish();
@@ -357,4 +364,32 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
             finish();
         }
     }
+    private class LongOperation extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            getContacts();
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressBar.dismiss();
+            customAdapterContacts.notifyDataSetChanged();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressBar = new ProgressDialog(ContactPickerActivity.this);
+            progressBar.setMessage("Loading Contacts...");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.setCancelable(false);
+            progressBar.show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
 }
+

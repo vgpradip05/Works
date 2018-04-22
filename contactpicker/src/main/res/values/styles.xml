@@ -7,7 +7,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">#29b6f6</item>
+    <item name="colorPrimaryDark">#2955f6</item>
+    <item name="colorAccent">#2955f6</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
