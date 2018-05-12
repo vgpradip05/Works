@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <RelativeLayout
-        android:layout_width="75dp"
+        android:layout_width="@dimen/size_75_dp"
         android:layout_height="wrap_content"
         >
         <FrameLayout
@@ -13,33 +13,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <android.support.v7.widget.CardView
-                android:id="@+id/view2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:elevation="12dp"
+                android:id="@+id/cardview"
+                android:layout_width="@dimen/size_60_dp"
+                android:layout_height="@dimen/size_60_dp"
+                android:layout_margin="@dimen/size_5_dp"
+                android:elevation="@dimen/size_12_dp"
                 android:innerRadius="0dp"
                 android:shape="ring"
                 android:thicknessRatio="1.9"
-                android:background="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#29b6f6"
-                app:cardCornerRadius="30dp">
+                app:cardBackgroundColor="@color/sky_blue"
+                app:cardCornerRadius="@dimen/size_30_sp">
                 <TextView
                     android:id="@+id/tv_contact_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="A"
-                    android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:text="@string/a"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/size_30_sp" />
             </android.support.v7.widget.CardView>
         </FrameLayout>
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
+            android:layout_marginTop="@dimen/size_5_dp"
+            android:layout_marginRight="@dimen/size_5_dp"
+            android:layout_width="@dimen/size_27_dp"
+            android:layout_height="@dimen/size_27_dp"
             android:layout_alignParentRight="true"
             android:adjustViewBounds="false"
             android:scaleType="centerInside"
@@ -53,7 +52,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="Amar"
-            android:textSize="16dp" />
+            android:text="@string/not_specified"
+            android:textSize="@dimen/size_16_sp" />
     </RelativeLayout>
 </LinearLayout>

@@ -17,16 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by root on 21/4/18.
+ * Created by vgpradip05 on 21/4/18.
  */
 
 public class CustomAdapterContacts extends BaseAdapter {
-    List<ContactDetails> contacts,selectedContacts;
-    Activity context;
-    List<ContactDetails> filtredListContact;
+    private List<ContactDetails> contacts,selectedContacts;
+    private Activity context;
+    private List<ContactDetails> filtredListContact;
     private ItemFilter mFilter = new ItemFilter();
-    String filteredString = "";
-    public CustomAdapterContacts(List<ContactDetails> contacts, List<ContactDetails> selectedContacts, ContactPickerActivity context) {
+    private String filteredString = "";
+    private CustomAdapterContacts(List<ContactDetails> contacts, List<ContactDetails> selectedContacts, ContactPickerActivity context) {
         this.contacts = contacts;
         this.selectedContacts = selectedContacts;
         this.context = context;
@@ -48,11 +48,10 @@ public class CustomAdapterContacts extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater anInflater = context.getLayoutInflater();
         View mViewGp = anInflater.inflate(R.layout.item_layout, null);
-        TextView tvName = (TextView) mViewGp.findViewById(R.id.tv_name);
-        TextView tvNumber = (TextView) mViewGp.findViewById(R.id.tv_number);
-        //ImageView ivContact = (ImageView) mViewGp.findViewById(R.id.iv_contact);
-        TextView tvTitle = (TextView) mViewGp.findViewById(R.id.tv_contact_title);
-        ImageView ivCheck = (ImageView)mViewGp.findViewById(R.id.iv_check);
+        TextView tvName =  mViewGp.findViewById(R.id.tv_name);
+        TextView tvNumber =  mViewGp.findViewById(R.id.tv_number);
+        TextView tvTitle = mViewGp.findViewById(R.id.tv_contact_title);
+        ImageView ivCheck = mViewGp.findViewById(R.id.iv_check);
 
         if(selectedContacts.contains(contacts.get(position)))
             ivCheck.setVisibility(View.VISIBLE);

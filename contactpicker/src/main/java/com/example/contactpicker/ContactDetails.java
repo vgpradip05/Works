@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by root on 21/4/18.
+ * Created by vgpradip05 on 21/4/18.
  */
 
 public class ContactDetails implements Serializable {

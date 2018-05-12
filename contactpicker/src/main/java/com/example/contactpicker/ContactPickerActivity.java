@@ -1,6 +1,7 @@
 package com.example.contactpicker;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -43,9 +44,10 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * Created by root on 21/4/18.
+ * Created by vgpradip05 on 21/4/18.
  */
 
 public class ContactPickerActivity extends AppCompatActivity implements View.OnClickListener {
@@ -66,24 +68,25 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
     View view;
     LinearLayout llHScrollView;
     FloatingActionButton fabDone,fabClose;
-    Animation fadeIn,fadeOut;
     ProgressDialog progressBar;
+    ContactPickerActivity context =ContactPickerActivity.this;
+    public static final String KEY_SELECTED_CONTACTS = "key";
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_picker);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Select Contacts");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.select));
         checkPermissionAndProceed();
-        lvContacts = (ListView)findViewById(R.id.lv_contacts);
-        fabDone = (FloatingActionButton)findViewById(R.id.fab_done);
-        fabClose = (FloatingActionButton)findViewById(R.id.fab_close);
-        //fadeIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
-        //fadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
-        customAdapterContacts = new CustomAdapterContacts(contacts,selectedContacts,ContactPickerActivity.this);
+        lvContacts = findViewById(R.id.lv_contacts);
+        fabDone = findViewById(R.id.fab_done);
+        fabClose = findViewById(R.id.fab_close);
+
+        customAdapterContacts = new CustomAdapterContacts(contacts,selectedContacts,context);
         lvContacts.setAdapter(customAdapterContacts);
-        llHScrollView = (LinearLayout)findViewById(R.id.ll_h_scrollview);
+        llHScrollView = findViewById(R.id.ll_h_scrollview);
         lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,13 +107,14 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         fabDone.setOnClickListener(this);
         fabClose.setOnClickListener(this);
     }
+    @SuppressLint("InflateParams")
     private void addContactChip(ContactDetails contactDetails) {
-        LayoutInflater anInflater = ContactPickerActivity.this.getLayoutInflater();
+        LayoutInflater anInflater = context.getLayoutInflater();
 
         view = anInflater.inflate(R.layout.contact_chip, null);
         view.setTag(contactDetails);
-        TextView textViewTitle = (TextView) view.findViewById(R.id.tv_contact_title);
-        TextView tvName = (TextView) view.findViewById(R.id.tv_name);
+        TextView textViewTitle = view.findViewById(R.id.tv_contact_title);
+        TextView tvName = view.findViewById(R.id.tv_name);
         textViewTitle.setText(String.valueOf(contactDetails.getContactName().charAt(0)));
         tvName.setText(contactDetails.getContactName());
         llHScrollView.addView(view);
@@ -136,6 +140,7 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
 
         ContentResolver contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,  ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+        assert cursor != null;
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -145,12 +150,13 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
                 InputStream inputStream = null;
 
                 if(id!=null){
-                    inputStream = ContactsContract.Contacts.openContactPhotoInputStream(ContactPickerActivity.this.getContentResolver(),
-                            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, new Long(id)));
+                    inputStream = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(),
+                            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(id)));
                 }
                 if (cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
                     Cursor pCur = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
                     phoneNumbers = new ArrayList<>();
+                    assert pCur != null;
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         String category = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
@@ -165,6 +171,7 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
                 }
                 Cursor emailCur = contentResolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{id}, null);
                 emailIds = new ArrayList<>();
+                assert emailCur != null;
                 while (emailCur.moveToNext()) {
                     String email = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
                     String emailType = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE));
@@ -176,11 +183,13 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
                 emailCur.close();
 
                 Cursor nNameCr = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, ContactsContract.Contacts._ID +" = ?", new String[]{id}, null);
+                assert nNameCr != null;
                 nNameCr.moveToNext();
                 String where = ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
                 String[] params = new String[] {id, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE};
-                Cursor nickname = ContactPickerActivity.this.getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, where, params, null);
+                Cursor nickname = context.getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, where, params, null);
                 String nickNameName = null;
+                assert nickname != null;
                 if(nickname.moveToNext()) {
                     nickNameName = nickname.getString(nickname.getColumnIndex(ContactsContract.CommonDataKinds.Nickname.NAME));
                 }
@@ -188,8 +197,9 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
                 contactDetails.setPhoneNumbers(phoneNumbers);
                 contactDetails.setEmailIds(emailIds);
                 contactDetails.setContactName(name);
-                //contactDetails.setContactPicture(inputStream);
                 contacts.add(contactDetails);
+                nickname.close();
+                nNameCr.close();
             }
         }
         cursor.close();
@@ -202,7 +212,7 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
                 //getContacts();
                 new LongOperation().execute("");
             } else {
-                ActivityCompat.requestPermissions(ContactPickerActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, CONTACT_REQ_CODE);
+                ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.READ_CONTACTS}, CONTACT_REQ_CODE);
             }
         } else {
             //getContacts();
@@ -215,13 +225,11 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         switch (requestCode) {
             case CONTACT_REQ_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    getContacts();
                     new LongOperation().execute("");
                 } else {
-                    Toast.makeText(ContactPickerActivity.this, "Permission denied to read your Contact Details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                     finish();
                 }
-                return;
             }
         }
     }
@@ -255,11 +263,13 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         ActionBar action = getSupportActionBar(); //get the actionbar
 
         if (isSearchOpened) { //test if the search is open
+            assert action != null;
             action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
             action.setDisplayShowTitleEnabled(true);  //show the title in the action bar
             View view = this.getCurrentFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if (view != null) {
+                assert imm != null;
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
             mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_search));
@@ -267,16 +277,17 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
             doSearch("");
         } else { //open the search entry
 
+            assert action != null;
             action.setDisplayShowCustomEnabled(true); //enable it to display a
             action.setDisplayShowTitleEnabled(false);
             ActionBar.LayoutParams params = new ActionBar.LayoutParams(
                     ActionBar.LayoutParams.MATCH_PARENT,
                     ActionBar.LayoutParams.MATCH_PARENT);
-            View view = LayoutInflater
+            @SuppressLint("InflateParams") View view = LayoutInflater
                     .from(action.getThemedContext())
                     .inflate(R.layout.layout_search, null);
             action.setCustomView(view, params);//add the custom view
-            edtSeach = (CustomEditText) getSupportActionBar().getCustomView().findViewById(R.id.edtSearch);
+            edtSeach = Objects.requireNonNull(getSupportActionBar()).getCustomView().findViewById(R.id.edtSearch);
             edtSeach.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -306,28 +317,31 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
             });
             edtSeach.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
             imm.showSoftInput(edtSeach, InputMethodManager.SHOW_IMPLICIT);
             mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_close2, null));
             isSearchOpened = true;
         }
     }
     private void doSearch(String searchQuery) {
-        ContactPickerActivity.this.customAdapterContacts.getFilter().filter(searchQuery);
+        context.customAdapterContacts.getFilter().filter(searchQuery);
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onBackPressed() {
         if(edtSeach!=null) {
             if (edtSeach.isFocused()) {
-                getSupportActionBar().setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
+                Objects.requireNonNull(getSupportActionBar()).setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
                 getSupportActionBar().setDisplayShowTitleEnabled(true);  //show the title in the action bar
                 View view = this.getCurrentFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (view != null) {
+                    assert imm != null;
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_search));
@@ -336,11 +350,11 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
             }
             else{
                 super.onBackPressed();
-                Toast.makeText(ContactPickerActivity.this,"Not Selected any contact",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,getString(R.string.not_selected),Toast.LENGTH_LONG).show();
             }
         }else {
             super.onBackPressed();
-            Toast.makeText(ContactPickerActivity.this,"Not Selected any contact",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,getString(R.string.not_selected),Toast.LENGTH_LONG).show();
         }
     }
     void checkSelctedContacts(){
@@ -356,11 +370,11 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         if(v.getId()==R.id.fab_done){
             Intent intent = getIntent();
-            intent.putExtra("key", (Serializable) selectedContacts);
+            intent.putExtra(KEY_SELECTED_CONTACTS, (Serializable) selectedContacts);
             setResult(RESULT_OK, intent);
             finish();
         }else if(v.getId()==R.id.fab_close){
-            Toast.makeText(ContactPickerActivity.this,"Not Selected any contact",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,getString(R.string.not_selected),Toast.LENGTH_LONG).show();
             finish();
         }
     }
@@ -369,7 +383,7 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
         @Override
         protected String doInBackground(String... params) {
             getContacts();
-            return "Executed";
+            return getString(R.string.exe);
         }
 
         @Override
@@ -380,8 +394,8 @@ public class ContactPickerActivity extends AppCompatActivity implements View.OnC
 
         @Override
         protected void onPreExecute() {
-            progressBar = new ProgressDialog(ContactPickerActivity.this);
-            progressBar.setMessage("Loading Contacts...");
+            progressBar = new ProgressDialog(context);
+            progressBar.setMessage(getString(R.string.loading));
             progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressBar.setCancelable(false);
             progressBar.show();
