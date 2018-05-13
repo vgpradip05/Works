@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Notification Source</string>
+    <string name="service_name">Service to get Notifications and Toasts</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="description">Enabling this service will provide permission to this application for reading and storing the toast messages for viewing them later on.</string>
+    <string name="package_name">package</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">Ok</string>
+    <string name="delete_record_warning">Do you really want to delete this record?</string>
+    <string name="delete_multi_record_warning">Are you sure you want to delete All records?</string>
+    <string name="select_time">Select Time</string>
+    <string name="cancel">Cancel</string>
+    <string name="accessibility_msg">You need to provide Accessibility permission To this application so that it could read and store the toast messages for viewing them later on.</string>
+    <string name="notification_msg">You need to provide Read Notification permission.</string>
+    <string name="permission_not_granted">Permission Not Granted Some of the functionalities wont Run.</string>
+    <string name="version">Version 1.0.1</string>
+    <string name="not_specified">Not Specified</string>
+    <string name="app_logo">Logo(icon) of an Application</string>
+    <string name="no_items">No Items Found in the list.</string>
+    <string name="app_name_c">App Name:</string>
+    <string name="text_body_c">Text body:</string>
+    <string name="time_c">Time:</string>
+    <string name="app_info">App Info</string>
+    <string name="launch_app">Go To App</string>
+    <string name="delete">Delete</string>
+    <string name="service_1">Service for Toast</string>
+    <string name="service_2">Service for Notification</string>
+    <string name="delete_old">Delete Older</string>
+    <string name="delete_all">Delete All</string>
+    <string name="share">Share</string>
+    <string name="notifications">Notifications</string>
+    <string name="toasts">Toasts</string>
+    <string name="application_deleted">This application is deleted.</string>
+</resources>
