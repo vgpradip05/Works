@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="row_padding_vertical">10dp</dimen>
+    <dimen name="edt_padding_vertical">7dp</dimen>
+    <dimen name="text_padding_vertical">5dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_album_radius">7dp</dimen>
+    <dimen name="album_cover_height">60dp</dimen>
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="login_img_height">250dp</dimen>
+    <dimen name="login_et_margin">40dp</dimen>
+
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">180dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="profile_width">75dp</dimen>
+    <dimen name="profile_height">75dp</dimen>
+    <dimen name="size_75_dp">75dp</dimen>
+</resources>

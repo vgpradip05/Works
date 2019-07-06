@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">ProjectGuru</string>
+    <string name="all_fields_are_mandatory">All fields are mandatory</string>
+    <string name="asterick">*</string>
+    <string name="name">Name</string>
+    <string name="currently_working_for">Currently Working For</string>
+    <string name="mobile_no">Mobile Number</string>
+    <string name="email">E-mail</string>
+    <string name="city">City: </string>
+    <string name="proffessional_of">Professional Of: </string>
+    <string name="excellence_in">Excellence In: </string>
+    <string name="graduated_from">Graduated From: </string>
+    <string name="register">Register</string>
+    <string name="register_here">Register here</string>
+    <string name="choose">Choose Resume(Pdf)</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or">Or</string>
+    <string name="intern">Intern</string>
+    <string name="university">University</string>
+    <string name="nav_your_profile">Profile</string>
+    <string name="nav_your_requests">Your Requests</string>
+    <string name="nav_about_us">Abour Us</string>
+    <string name="nav_logout">Logout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="app_logo">Logo(icon) of an Application</string>
+    <string name="version">v1.0.0</string>
+    <string name="ok">Ok</string>
+    <string name="send_req">Send Request</string>
+    <string name="cancel">Cancel</string>
+
+</resources>

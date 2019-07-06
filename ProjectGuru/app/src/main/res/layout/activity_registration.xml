@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+    <include
+        android:id="@+id/progress_overlay_layout"
+        layout="@layout/progress_overlay"
+        android:background="@android:color/transparent"
+        />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_create_bid"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_fields_are_mandatory"
+                    android:textColor="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/asterick"
+                    android:textColor="@android:color/holo_red_dark"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                >
+                <RadioGroup
+                    android:id="@+id/rg_type"
+                    android:layout_width="0dp"
+                    android:layout_weight="70"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <RadioButton
+                        android:id="@+id/rb_intern"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/intern" />
+
+                    <RadioButton
+                        android:id="@+id/rb_univ"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/university" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:id="@+id/ll_act_reg_name"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_act_reg_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/text_padding_vertical">
+
+                    <EditText
+                        android:id="@+id/et_act_reg_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_name"
+                        android:drawablePadding="@dimen/row_padding_vertical"
+                        android:hint="@string/name"
+                        android:inputType="textPersonName"
+                        android:padding="@dimen/edt_padding_vertical"
+
+                        />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:id="@+id/ll_act_reg_cw"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_act_reg_working_for"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/text_padding_vertical"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/et_act_reg_working_for"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_workingfor"
+                        android:drawablePadding="@dimen/row_padding_vertical"
+                        android:hint="@string/currently_working_for"
+                        android:inputType="textShortMessage"
+                        android:padding="@dimen/edt_padding_vertical"
+
+                        />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:id="@+id/ll_act_reg_mob"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_act_reg_mobile_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/text_padding_vertical">
+
+                    <!--<TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+91 " />-->
+
+                    <EditText
+                        android:id="@+id/et_act_reg_mobile_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:digits="0123456789"
+                        android:drawableLeft="@drawable/ic_mobile"
+                        android:drawablePadding="@dimen/row_padding_vertical"
+                        android:hint="@string/mobile_no"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:padding="@dimen/edt_padding_vertical" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:id="@+id/ll_act_reg_email"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_act_reg_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/text_padding_vertical">
+
+                    <EditText
+                        android:id="@+id/et_act_reg_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_email"
+                        android:drawablePadding="@dimen/row_padding_vertical"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:padding="@dimen/edt_padding_vertical" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:padding="@dimen/row_padding_vertical"
+                android:id="@+id/ll_act_reg_city"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_city"
+                    android:drawablePadding="@dimen/row_padding_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@string/city"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/sp_act_reg_city"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:padding="@dimen/row_padding_vertical"
+                android:id="@+id/ll_act_reg_prof"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_professional"
+                    android:drawablePadding="@dimen/row_padding_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@string/proffessional_of"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/sp_act_reg_professsional_of"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:padding="@dimen/row_padding_vertical"
+                android:id="@+id/ll_act_reg_exc"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_exel"
+                    android:drawablePadding="@dimen/row_padding_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@string/excellence_in"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/sp_act_reg_excellence_in"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_padding_vertical"
+                android:background="@drawable/rounded_background"
+                android:gravity="center_vertical"
+                android:padding="@dimen/row_padding_vertical"
+                android:id="@+id/ll_act_reg_grad"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_university"
+                    android:drawablePadding="@dimen/row_padding_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@string/graduated_from"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/sp_act_reg_graduated_from"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:id="@+id/ll_act_reg_ib"
+                >
+
+                <TextView
+                    android:id="@+id/tv_uploaded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <ImageButton
+                    android:id="@+id/bt_act_reg_chooser"
+                    style="@android:style/Widget.Button.Small"
+                    android:layout_width="@dimen/button_height"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_gravity="end"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/pdf"
+                    android:drawablePadding="@dimen/row_padding_vertical"
+                    android:padding="5dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/bt_act_reg_register"
+                style="@style/CustomButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/register" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
