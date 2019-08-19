@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OfflineImageSearch</string>
+    <string name="image_not_found">Image not found</string>
+    <string name="pl_type_something">Please type something</string>
+    <string name="search_image_here">Search Image here</string>
+    <string name="search">search</string>
+    <string name="loading_images_offline">Loading images Offline</string>
+</resources>
